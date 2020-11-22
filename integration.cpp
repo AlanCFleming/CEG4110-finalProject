@@ -19,7 +19,7 @@ struct patient{
 
 //assume that this stucture stores identification information accuracy threasholds as doubles between 0 and 1 inclusively
 //Identification accuracy will be recieved by the program to compare to threadholds
-//For status, the sting available indicates the doctor is in office and availible.
+//For status, the sting available indicates the doctor is in office and available.
 struct doctor{
 	double fingerprint;
 	double iris;
@@ -27,8 +27,101 @@ struct doctor{
 	double signature;
 	string name;
 	string status;
-} ;
+};
 
+
+//function for checking patient information
+
+bool checkPatient(patient unknown, patient known) {
+	
+	bool valid = true;
+	
+	if(unknown.bloodPressure =< 0) {
+		valid = false;
+	}
+
+	if(isnan(unknown.temperature)) {
+		valid = false;
+	}
+
+	if(unknown.heartrate < 0) {
+		valid = false;
+	}
+
+	if(unknown.oxygen < 0) {
+		valid = false;
+	}
+
+	if(unknown.age < 0) {
+		valid = false;
+	}
+
+	//copy and transform names for comparison
+	string temp1 = unknown.name, temp2 = known.name;
+
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+
+	if(temp1.compare(temp2) != 0) {
+		valid = false;
+	}
+
+	//copy and transform doctor names for comparison
+	string temp1 = unknown.doctor, temp2 = known.doctor;
+
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+
+	if(temp1.compare(temp2) != 0) {
+		valid = false;
+	}
+
+	//return validity
+	return valid;
+}
+
+bool checkDoctor( doctor unknown, doctor known) {
+	
+	bool valid = true;
+	
+	if(unknown.fingerprint < known.fingerprint) {
+		valid = false;
+	}
+
+	if(unknown.iris < known.iris) {
+		valid = false;
+	}
+
+	if(unknown.voice < known.voice) {
+		valid = false;
+	}
+
+	if(unknown.signature < known.voice) {
+		valid = false;
+	}
+	
+	//copy and transform names for comparison
+	string temp1 = unknown.name, temp2 = known.name;
+
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+
+	if(temp1.compare(temp2) != 0) {
+		valid = false;
+	}
+
+	//copy and transform names for comparison
+	string temp1 = unknown.status, temp2 = known.status;
+
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
+
+	if(temp1.compare(temp2) != 0 || temp1.compare("available") != 0) {
+		valid = false;
+	}
+
+	return valid;
+}
 
 //for simulation purposes, the patient and doctor information is recieved as command line arguments in the order given above.
 int main(int argc, char **argv) {
