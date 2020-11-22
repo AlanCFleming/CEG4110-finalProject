@@ -205,12 +205,24 @@ int main(int argc, char **argv) {
 
 	if(doctorValid) {
 		doctorValid = checkDoctor(doctorInput, docterKnown);
-		//no need to cross reference a invalid doctor
-		if(doctorValid) {
-			doctorValid = comparePatientDoctor(patientKnown, doctorKnown);
-		}
 	}
 
+	//no need to cross reference a invalid doctor or patient
+	if(doctorValid && patientValid) {
+		//If the entries dont match assume the doctor is not the correct doctor
+		doctorValid = comparePatientDoctor(patientKnown, doctorKnown);
+	}
+
+	//print message based on validity class
+	if(!patientValid && !doctorValid){
+		cout << "The patient information does not match known records or was invalid and the doctor was not able to be authenticated or unavailable\n";
+	} else if (!patientValid) {
+		cout << "The patient information does not match known records or was invalid; however, the doctor was able to be authenticated\n";
+	} else if (!doctorValid) {
+		cout << "The patient information does not match known records; however, the doctor was able to be authenticated or unavailable\n";
+	} else { 
+		cout << "The patient information does match known records and the doctor was able to be authenticated\n";
+	}
 
 	return 0;
 }
