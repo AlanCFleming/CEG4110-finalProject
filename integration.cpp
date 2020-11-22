@@ -198,6 +198,19 @@ int main(int argc, char **argv) {
 		doctorValid = false;
 	}
 
+	//check patient and doctor validity
+	if(patientValid) {
+		patientValid = checkPatient(patientInput, patientKnown);
+	}
+
+	if(doctorValid) {
+		doctorValid = checkDoctor(doctorInput, docterKnown);
+		//no need to cross reference a invalid doctor
+		if(doctorValid) {
+			doctorValid = comparePatientDoctor(patientKnown, doctorKnown);
+		}
+	}
+
 
 	return 0;
 }
