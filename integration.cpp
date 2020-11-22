@@ -110,13 +110,30 @@ bool checkDoctor( doctor unknown, doctor known) {
 		valid = false;
 	}
 
-	//copy and transform names for comparison
+	//copy and transform status for comparison
 	string temp1 = unknown.status, temp2 = known.status;
 
 	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
 	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
 
 	if(temp1.compare(temp2) != 0 || temp1.compare("available") != 0) {
+		valid = false;
+	}
+
+	return valid;
+}
+
+bool comparePatientDoctor(patient p, doctor d) {
+		
+	valid = true;
+
+	//copy and transform doctor name for comparison
+	string temp1 = p.doctor, name2 = d.name;
+
+	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
+	transform(name2.begin(), name2.end(), name2.begin(), ::tolower);
+
+	if(temp1.compare(name2) != 0) {
 		valid = false;
 	}
 
