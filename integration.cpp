@@ -39,6 +39,9 @@ int main(int argc, char **argv) {
 		cout << "Please input all patient and doctor information as arguments\n";
 	}
 
+	//set up boolean to track validity
+	bool doctorValid = true, patientValid = true;
+
 	//initialize known patient record
 	patient patientKnown;
 	patientKnown.bloodPressure = 100;
@@ -50,14 +53,18 @@ int main(int argc, char **argv) {
 	patientKnown.doctor = "Travis Doom";
 
 	//initialize input patient record
-	patient patientInput;
-	patientInput.bloodPressure = argv[1];
-	patientInput.temperature = argv[2];
-	patientInput.heartrate = argv[3];
-	patientInput.oxygen = argv[4];
-	patientInput.age = argv[5];
-	patientInput.name = argv[6];
-	patientInput.doctor = argv[7];
+	try {
+		patient patientInput;
+		patientInput.bloodPressure = stod(argv[1]);
+		patientInput.temperature = stod(argv[2]);
+		patientInput.heartrate = stod(argv[3]);
+		patientInput.oxygen = stod(argv[4]);
+		patientInput.age = stoi(argv[5]);
+		patientInput.name = argv[6];
+		patientInput.doctor = argv[7];
+	} catch (...) {
+		patientValid = false;
+	}
 
 	//initialize known doctor record
 	doctor doctorKnown;
@@ -69,13 +76,18 @@ int main(int argc, char **argv) {
 	doctorKnown.status = "available";
 
 	//initialize input doctor record
-	doctor doctorInput;
-	doctorInput.fingerprint = argv[8];
-	doctorInput.iris = argv[9];
-	doctorInput.voice = argv[10];
-	doctorInput.signature = argv[11];
-	doctorInput.name = argv[12];
-	doctorInput.status = argv[13];
+	try {
+		doctor doctorInput;
+		doctorInput.fingerprint = stod(argv[8]);
+		doctorInput.iris = stod(argv[9]);
+		doctorInput.voice = stod(argv[10]);
+		doctorInput.signature = stod(argv[11]);
+		doctorInput.name = argv[12];
+		doctorInput.status = argv[13];
+	} catch(...) {
+		doctorValid = false;
+	}
+
 
 	return 0;
 }
