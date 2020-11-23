@@ -1,6 +1,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <string>
+#include <iostream>
+#include <algorithm>
+
 
 using namespace std;
 
@@ -36,7 +40,7 @@ bool checkPatient(patient unknown, patient known) {
 	
 	bool valid = true;
 	
-	if(unknown.bloodPressure =< 0) {
+	if(unknown.bloodPressure <= 0) {
 		valid = false;
 	}
 
@@ -67,7 +71,8 @@ bool checkPatient(patient unknown, patient known) {
 	}
 
 	//copy and transform doctor names for comparison
-	string temp1 = unknown.doctor, temp2 = known.doctor;
+	temp1 = unknown.doctor;
+	temp2 = known.doctor;
 
 	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
 	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
@@ -111,7 +116,8 @@ bool checkDoctor( doctor unknown, doctor known) {
 	}
 
 	//copy and transform status for comparison
-	string temp1 = unknown.status, temp2 = known.status;
+	temp1 = unknown.status;
+	temp2 = known.status;
 
 	transform(temp1.begin(), temp1.end(), temp1.begin(), ::tolower);
 	transform(temp2.begin(), temp2.end(), temp2.begin(), ::tolower);
@@ -125,7 +131,7 @@ bool checkDoctor( doctor unknown, doctor known) {
 
 bool comparePatientDoctor(patient p, doctor d) {
 		
-	valid = true;
+	bool valid = true;
 
 	//copy and transform doctor name for comparison
 	string temp1 = p.doctor, name2 = d.name;
@@ -147,6 +153,7 @@ int main(int argc, char **argv) {
 	//We ignore any extra arguments
 	if(argc < 13) {
 		cout << "Please input all patient and doctor information as arguments\n";
+		return 1;
 	}
 
 	//set up boolean to track validity
@@ -163,8 +170,9 @@ int main(int argc, char **argv) {
 	patientKnown.doctor = "Travis Doom";
 
 	//initialize input patient record
+	patient patientInput;
 	try {
-		patient patientInput;
+		
 		patientInput.bloodPressure = stod(argv[1]);
 		patientInput.temperature = stod(argv[2]);
 		patientInput.heartrate = stod(argv[3]);
@@ -186,8 +194,9 @@ int main(int argc, char **argv) {
 	doctorKnown.status = "available";
 
 	//initialize input doctor record
+	doctor doctorInput;
 	try {
-		doctor doctorInput;
+		
 		doctorInput.fingerprint = stod(argv[8]);
 		doctorInput.iris = stod(argv[9]);
 		doctorInput.voice = stod(argv[10]);
@@ -204,7 +213,7 @@ int main(int argc, char **argv) {
 	}
 
 	if(doctorValid) {
-		doctorValid = checkDoctor(doctorInput, docterKnown);
+		doctorValid = checkDoctor(doctorInput, doctorKnown);
 	}
 
 	//no need to cross reference a invalid doctor or patient
@@ -219,7 +228,7 @@ int main(int argc, char **argv) {
 	} else if (!patientValid) {
 		cout << "The patient information does not match known records or was invalid; however, the doctor was able to be authenticated\n";
 	} else if (!doctorValid) {
-		cout << "The patient information does not match known records; however, the doctor was able to be authenticated or unavailable\n";
+		cout << "The patient information does match known records; however, the doctor was not able to be authenticated or unavailable\n";
 	} else { 
 		cout << "The patient information does match known records and the doctor was able to be authenticated\n";
 	}
