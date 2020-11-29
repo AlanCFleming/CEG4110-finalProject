@@ -40,7 +40,7 @@ bool checkPatient(patient unknown, patient known) {
 	
 	bool valid = true;
 	
-	if(unknown.bloodPressure <= 0) {
+	if(unknown.bloodPressure <= 0) { 
 		valid = false;
 	}
 
@@ -101,7 +101,7 @@ bool checkDoctor( doctor unknown, doctor known) {
 		valid = false;
 	}
 
-	if(unknown.signature < known.voice) {
+	if(unknown.signature < known.signature) {
 		valid = false;
 	}
 	
